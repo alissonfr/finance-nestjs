@@ -1,6 +1,6 @@
-import { UserRequest } from "src/adapters/model/response/user-request.dto";
+import { UserResponse } from "../../adapters/model/request/user-response.dto";
+import { UserRequest } from "../../adapters/model/response/user-request.dto";
 import { User } from "../model/user.entity";
-import { UserResponse } from "src/adapters/model/request/user-response.dto";
 
 export class UserMapper {
     static toEntity(createUserDto: UserRequest): User {

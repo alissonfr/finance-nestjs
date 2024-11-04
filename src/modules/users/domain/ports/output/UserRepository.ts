@@ -1,9 +1,9 @@
 import { User } from '../../model/user.entity';
 
-export interface IUserRepository {
+export interface UserRepository {
   findAll(): Promise<User[]>
   findById(id: number): Promise<User>
   save(user: User): Promise<User>
 }
 
-export const IUserRepository = Symbol('IUserRepository');
+export const UserRepository = Symbol('UserRepository');

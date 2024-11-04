@@ -1,14 +1,13 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { UserRequest } from '../model/response/user-request.dto';
-import { User } from '../../domain/model/user.entity';
-import { UserService } from '../../domain/ports/input/user.service';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserResponse } from '../model/request/user-response.dto';
+import { UserRequest } from '../model/response/user-request.dto';
+import { UserService } from '../../domain/ports/input/UserService';
 
 @ApiTags('User')
 @Controller('user')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(@Inject(UserService) private userService: UserService) {}
 
   @Get()
   async find(): Promise<UserResponse[]> {
@@ -21,7 +20,7 @@ export class UserController {
   }
 
   @Post()
-  async ave(@Body() userRequest: UserRequest): Promise<UserResponse> {
+  async save(@Body() userRequest: UserRequest): Promise<UserResponse> {
     return await this.userService.save(userRequest);
   }
 }
