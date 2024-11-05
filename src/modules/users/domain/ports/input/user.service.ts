@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { UserRequest } from 'src/modules/users/adapters/model/request/user-request.dto';
 import { UserResponse } from 'src/modules/users/adapters/model/response/user-response.dto';
 import { UserMapper } from '../../mapper/user.mapper';
@@ -24,6 +24,16 @@ export class UserServiceImpl implements UserService {
 
   async save(userRequest: UserRequest): Promise<UserResponse> {
     const user = UserMapper.toEntity(userRequest);
+    return UserMapper.toResponse(await this.userRepository.save(user));
+  }
+
+  async update(id: number, userRequest: UserRequest): Promise<UserResponse> {
+    const existingUser = await this.userRepository.findById(id);
+    if (!existingUser) {
+      throw new NotFoundException('User with ID not found.');
+    }
+    const user = UserMapper.toEntity(userRequest);
+    user.userId = id;
     return UserMapper.toResponse(await this.userRepository.save(user));
   }
 }

@@ -8,6 +8,7 @@ export class UserMapper {
       user.name = createUserDto.name;
       user.email = createUserDto.email;
       user.cpf = createUserDto.cpf;
+      user.password = createUserDto.password;
       return user;
     }
   

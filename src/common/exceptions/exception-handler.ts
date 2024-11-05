@@ -9,6 +9,7 @@ export class ExceptionHandler implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest();
+    console.error(exception)
 
     if (exception.code === SqlErrorEnum.UNIQUE_VIOLATION) {
       return this.handleUniqueViolation(exception, response, request);
