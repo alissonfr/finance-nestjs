@@ -13,7 +13,8 @@ import { CommonModule } from './common/common.module';
       password: 'admin',
       database: 'finance',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true, // Não use em produção
+      autoLoadEntities: true,
+      synchronize: true,
     }),
     CommonModule,
     UsersModule,

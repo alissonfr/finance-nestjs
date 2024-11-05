@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../../domain/model/user.entity';
 import { UserRepository } from '../../domain/ports/output/UserRepository';
-import { SqlErrorEnum } from 'src/common/enums/sql-error.enum';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {

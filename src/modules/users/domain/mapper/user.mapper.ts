@@ -1,5 +1,5 @@
-import { UserResponse } from "../../adapters/model/request/user-response.dto";
-import { UserRequest } from "../../adapters/model/response/user-request.dto";
+import { UserResponse } from "../../adapters/model/response/user-response.dto";
+import { UserRequest } from "../../adapters/model/request/user-request.dto";
 import { User } from "../model/user.entity";
 
 export class UserMapper {

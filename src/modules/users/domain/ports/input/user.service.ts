@@ -1,11 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserRepository } from '../output/UserRepository';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserService } from './UserService';
-import { UserResponse } from 'src/modules/users/adapters/model/request/user-response.dto';
-import { UserRepositoryImpl } from 'src/modules/users/adapters/driven/user.repository.impl';
-import { UserRequest } from 'src/modules/users/adapters/model/response/user-request.dto';
+import { UserRequest } from 'src/modules/users/adapters/model/request/user-request.dto';
+import { UserResponse } from 'src/modules/users/adapters/model/response/user-response.dto';
 import { UserMapper } from '../../mapper/user.mapper';
+import { UserRepository } from '../output/UserRepository';
+import { UserService } from './UserService';
 
 @Injectable()
 export class UserServiceImpl implements UserService {

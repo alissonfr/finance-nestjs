@@ -1,4 +1,4 @@
-import { UserResponse } from 'src/modules/users/adapters/model/request/user-response.dto';
+import { UserResponse } from 'src/modules/users/adapters/model/response/user-response.dto';
 import { User } from '../../model/user.entity';
 
 export interface UserService {
