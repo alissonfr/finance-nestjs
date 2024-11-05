@@ -7,7 +7,9 @@ import { UserService } from '../../domain/ports/input/UserService';
 @ApiTags('User')
 @Controller('user')
 export class UserController {
-  constructor(@Inject(UserService) private userService: UserService) {}
+  constructor(
+    @Inject(UserService) private readonly userService: UserService
+  ) {}
 
   @Get()
   async find(): Promise<UserResponse[]> {

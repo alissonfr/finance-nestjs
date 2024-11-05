@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../../domain/model/user.entity';
 import { UserRepository } from '../../domain/ports/output/UserRepository';
+import { SqlErrorEnum } from 'src/common/enums/sql-error.enum';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
@@ -11,15 +12,15 @@ export class UserRepositoryImpl implements UserRepository {
     private readonly repository: Repository<User>,
   ) {}
 
-  findAll(): Promise<User[]> {
-    return this.repository.find();
+  async findAll(): Promise<User[]> {
+    return await this.repository.find();
   }
 
-  findById(userId: number): Promise<User> {
-    return this.repository.findOneBy({ userId });
+  async findById(userId: number): Promise<User> {
+    return await this.repository.findOneBy({ userId });
   }
 
-  save(user: User): Promise<User> {
-    return this.repository.save(user);
+  async save(user: User): Promise<User> {
+    return await this.repository.save(user);
   }
 }
