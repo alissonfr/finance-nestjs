@@ -1,7 +1,13 @@
 import { Module } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './modules/users/users.module';
-import { CommonModule } from './common/common.module';
+import { UserRepositoryImpl } from './adapters/driven/user.repository.impl';
+import { UserController } from './adapters/driver/user.controller';
+import { User } from './domain/model/user.entity';
+import { UserService } from './domain/ports/input/UserService';
+import { UserServiceImpl } from './domain/ports/input/user.service';
+import { UserRepository } from './domain/ports/output/UserRepository';
+import { ExceptionHandler } from './exceptions/exception-handler';
 
 @Module({
   imports: [
@@ -16,8 +22,13 @@ import { CommonModule } from './common/common.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    CommonModule,
-    UsersModule,
+    TypeOrmModule.forFeature([User])
+  ],
+  controllers: [UserController],
+  providers: [
+    { provide: APP_FILTER, useClass: ExceptionHandler },
+    { provide: UserRepository, useClass: UserRepositoryImpl },
+    { provide: UserService, useClass: UserServiceImpl }
   ],
 })
 export class AppModule {}
