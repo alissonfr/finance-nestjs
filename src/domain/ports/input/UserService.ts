@@ -1,6 +1,5 @@
-import { UserResponse } from 'src/modules/users/adapters/model/response/user-response.dto';
-import { User } from '../../model/user.entity';
-import { UserRequest } from 'src/modules/users/adapters/model/request/user-request.dto';
+import { UserRequest } from "src/adapters/model/request/user-request.dto";
+import { UserResponse } from "src/adapters/model/response/user-response.dto";
 
 export interface UserService {
   find(): Promise<UserResponse[]>

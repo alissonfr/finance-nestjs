@@ -1,9 +1,9 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { UserRequest } from 'src/modules/users/adapters/model/request/user-request.dto';
-import { UserResponse } from 'src/modules/users/adapters/model/response/user-response.dto';
 import { UserMapper } from '../../mapper/user.mapper';
 import { UserRepository } from '../output/UserRepository';
 import { UserService } from './UserService';
+import { UserResponse } from 'src/adapters/model/response/user-response.dto';
+import { UserRequest } from 'src/adapters/model/request/user-request.dto';
 
 @Injectable()
 export class UserServiceImpl implements UserService {

@@ -7,7 +7,7 @@ import { User } from './domain/model/user.entity';
 import { UserService } from './domain/ports/input/UserService';
 import { UserServiceImpl } from './domain/ports/input/user.service';
 import { UserRepository } from './domain/ports/output/UserRepository';
-import { ExceptionHandler } from './exceptions/exception-handler';
+import { ExceptionHandler } from './shared/exceptions/exception-handler';
 
 @Module({
   imports: [
