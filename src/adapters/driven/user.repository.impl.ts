@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { User } from '../../domain/model/user.entity';
 import { UserRepository } from '../../domain/ports/output/UserRepository';
 
@@ -16,10 +16,11 @@ export class UserRepositoryImpl implements UserRepository {
   }
 
   async findById(userId: number): Promise<User> {
-    return await this.repository.findOneBy({ userId });
+    return await this.repository.findOneByOrFail({ userId });
   }
 
-  async save(user: User): Promise<User> {
-    return await this.repository.save(user);
+  async save(user: DeepPartial<User>): Promise<User> {
+    const newUser = this.repository.create(user);
+    return await this.repository.save(newUser);
   }
 }

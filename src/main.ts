@@ -1,9 +1,18 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { ExceptionHandler } from './shared/exceptions/exception-handler';
+import { VersioningType } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
+  app.useGlobalFilters(new ExceptionHandler());
+
+  app.enableVersioning({
+    defaultVersion: '1',
+    type: VersioningType.URI,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Finance APP')

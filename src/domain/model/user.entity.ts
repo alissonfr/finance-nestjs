@@ -1,4 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Account } from './account.entity';
+import { TransactionCategory } from './transaction-category.entity';
+import { Transaction } from './transaction.entity';
 
 @Entity('users')
 export class User {
@@ -16,4 +19,13 @@ export class User {
 
   @Column({ nullable: false })
   password: string;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.user)
+  transactions: Transaction[];
+
+  @OneToMany(() => Account, (account) => account.user)
+  accounts: Account[];
+
+  @OneToMany(() => TransactionCategory, (category) => category.user)
+  categories: TransactionCategory[];
 }

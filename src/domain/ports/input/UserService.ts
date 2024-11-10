@@ -5,7 +5,7 @@ export interface UserService {
   find(): Promise<UserResponse[]>
   findById(userId: number): Promise<UserResponse>
   save(user: UserRequest): Promise<UserResponse>
-  update(userId: number, userRequest: UserRequest): Promise<UserResponse>
+  update(userId: number, request: UserRequest): Promise<UserResponse>
 }
 
 export const UserService = Symbol('UserService');
