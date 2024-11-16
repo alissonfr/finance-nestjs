@@ -6,6 +6,7 @@ export interface UserService {
   findById(userId: number): Promise<UserResponse>
   save(user: UserRequest): Promise<UserResponse>
   update(userId: number, request: UserRequest): Promise<UserResponse>
+  findByEmail(email: string): Promise<UserResponse>
 }
 
 export const UserService = Symbol('UserService');

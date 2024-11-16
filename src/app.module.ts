@@ -1,25 +1,24 @@
 import { Module } from '@nestjs/common';
-import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserRepositoryImpl } from './adapters/driven/user.repository.impl';
-import { UserController } from './adapters/driver/user.controller';
-import { User } from './domain/model/user.entity';
-import { UserService } from './domain/ports/input/UserService';
-import { UserServiceImpl } from './domain/ports/input/user.service';
-import { UserRepository } from './domain/ports/output/UserRepository';
-import { ExceptionHandler } from './shared/exceptions/exception-handler';
-import { TransactionRepository } from './domain/ports/output/TransactionRepository';
-import { TransactionService } from './domain/ports/input/TransactionService';
-import { TransactionRepositoryImpl } from './adapters/driven/transaction.repository.impl';
-import { TransactionServiceImpl } from './domain/ports/input/transaction.service';
-import { TransactionCategoryRepository } from './domain/ports/output/TransactionCategoryRepository';
-import { TransactionCategoryRepositoryImpl } from './adapters/driven/transaction-category.repository.impl';
-import { AccountRepository } from './domain/ports/output/AccountRepository';
 import { AccountRepositoryImpl } from './adapters/driven/account.repository.impl';
-import { Transaction } from './domain/model/transaction.entity';
-import { TransactionCategory } from './domain/model/transaction-category.entity';
-import { Account } from './domain/model/account.entity';
+import { TransactionCategoryRepositoryImpl } from './adapters/driven/transaction-category.repository.impl';
+import { TransactionRepositoryImpl } from './adapters/driven/transaction.repository.impl';
+import { UserRepositoryImpl } from './adapters/driven/user.repository.impl';
+import { AuthController } from './adapters/driver/auth.controller';
 import { TransactionController } from './adapters/driver/transaction.controller';
+import { UserController } from './adapters/driver/user.controller';
+import { Account } from './domain/model/account.entity';
+import { TransactionCategory } from './domain/model/transaction-category.entity';
+import { Transaction } from './domain/model/transaction.entity';
+import { User } from './domain/model/user.entity';
+import { TransactionService } from './domain/ports/input/TransactionService';
+import { UserService } from './domain/ports/input/UserService';
+import { TransactionServiceImpl } from './domain/ports/input/transaction.service';
+import { UserServiceImpl } from './domain/ports/input/user.service';
+import { AccountRepository } from './domain/ports/output/AccountRepository';
+import { TransactionCategoryRepository } from './domain/ports/output/TransactionCategoryRepository';
+import { TransactionRepository } from './domain/ports/output/TransactionRepository';
+import { UserRepository } from './domain/ports/output/UserRepository';
 
 @Module({
   imports: [
@@ -36,7 +35,7 @@ import { TransactionController } from './adapters/driver/transaction.controller'
     }),
     TypeOrmModule.forFeature([User, Transaction, TransactionCategory, Account]),
   ],
-  controllers: [UserController, TransactionController],
+  controllers: [UserController, TransactionController, AuthController],
   providers: [
     // { provide: APP_FILTER, useClass: ExceptionHandler },
 

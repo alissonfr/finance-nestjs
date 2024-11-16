@@ -34,4 +34,10 @@ export class UserServiceImpl implements UserService {
     }
     return UserMapper.toResponse(await this.userRepository.save({ userId: id, ...request }));
   }
+
+  async findByEmail(email: string): Promise<UserResponse> {
+    const user = await this.userRepository.findByEmail(email);
+    return UserMapper.toResponse(user);
+  }
+
 }

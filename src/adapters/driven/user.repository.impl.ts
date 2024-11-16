@@ -23,4 +23,8 @@ export class UserRepositoryImpl implements UserRepository {
     const newUser = this.repository.create(user);
     return await this.repository.save(newUser);
   }
+
+  async findByEmail(email: string): Promise<User> {
+    return await this.repository.findOneByOrFail({ email });
+  }
 }
