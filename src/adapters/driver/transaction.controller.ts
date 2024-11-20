@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, HttpCode, HttpStatus, Inject, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, HttpCode, HttpStatus, Inject, Put, Query } from '@nestjs/common';
 import { ApiTags, ApiResponse, ApiOperation, ApiParam } from '@nestjs/swagger';
 import { TransactionService } from '../../domain/ports/input/TransactionService';
 import { TransactionResponse } from '../model/response/transaction-response.dto';
@@ -15,8 +15,13 @@ export class TransactionController {
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Retrieve all transactions' })
   @ApiResponse({ status: HttpStatus.OK, description: 'Transactions retrieved successfully', type: [TransactionResponse] })
-  async findAll(): Promise<TransactionResponse[]> {
-    return this.transactionService.find();
+  async find(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+    @Query('year') year?: number,
+    @Query('month') month?: number,
+  ): Promise<TransactionResponse[]> {
+    return this.transactionService.find({ page, limit, year, month });
   }
 
   @Get(':transactionId')

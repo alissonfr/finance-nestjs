@@ -21,8 +21,8 @@ export class TransactionServiceImpl implements TransactionService {
     private readonly userRepository: UserRepository,
   ) {}
 
-  async find(): Promise<TransactionResponse[]> {
-    const transactions = await this.transactionRepository.findAll();
+  async find({ page, limit, year, month }): Promise<TransactionResponse[]> {
+    const transactions = await this.transactionRepository.find({ page, limit, year, month });
     return transactions.map(transaction => TransactionMapper.toResponse(transaction));
   }
 

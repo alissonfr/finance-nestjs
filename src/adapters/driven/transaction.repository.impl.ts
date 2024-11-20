@@ -11,9 +11,20 @@ export class TransactionRepositoryImpl implements TransactionRepository {
     private readonly repository: Repository<Transaction>,
   ) {}
 
-  async findAll(): Promise<Transaction[]> {
-    return await this.repository.find();
+  async find({ page, limit, year, month }): Promise<Transaction[]> {
+    const queryBuilder = this.repository.createQueryBuilder('transaction')
+      .leftJoinAndSelect('transaction.category', 'category')
+      .leftJoinAndSelect('transaction.account', 'account')
+      .leftJoinAndSelect('transaction.user', 'user');
+  
+    if (year) queryBuilder.andWhere('EXTRACT(YEAR FROM transaction.date) = :year', { year });
+    if (month) queryBuilder.andWhere('EXTRACT(MONTH FROM transaction.date) = :month', { month });
+  
+    queryBuilder.skip((page - 1) * limit).take(limit);
+  
+    return await queryBuilder.getMany();
   }
+  
 
   async findById(transactionId: number): Promise<Transaction> {
     return await this.repository.findOneByOrFail({ transactionId });

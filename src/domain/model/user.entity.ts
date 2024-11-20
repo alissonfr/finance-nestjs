@@ -1,11 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn } from 'typeorm';
 import { Account } from './account.entity';
 import { TransactionCategory } from './transaction-category.entity';
 import { Transaction } from './transaction.entity';
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'user_id' })
   userId?: number;
 
   @Column({ nullable: false })

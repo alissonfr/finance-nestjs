@@ -19,6 +19,12 @@ import { AccountRepository } from './domain/ports/output/AccountRepository';
 import { TransactionCategoryRepository } from './domain/ports/output/TransactionCategoryRepository';
 import { TransactionRepository } from './domain/ports/output/TransactionRepository';
 import { UserRepository } from './domain/ports/output/UserRepository';
+import { TransactionCategoryController } from './adapters/driver/transaction-category.controller';
+import { AccountController } from './adapters/driver/account.controller';
+import { TransactionCategoryService } from './domain/ports/input/TransactionCategoryService';
+import { TransactionCategoryServiceImpl } from './domain/ports/input/transaction-category.service';
+import { AccountService } from './domain/ports/input/AccountService';
+import { AccountServiceImpl } from './domain/ports/input/account.service';
 
 @Module({
   imports: [
@@ -35,7 +41,7 @@ import { UserRepository } from './domain/ports/output/UserRepository';
     }),
     TypeOrmModule.forFeature([User, Transaction, TransactionCategory, Account]),
   ],
-  controllers: [UserController, TransactionController, AuthController],
+  controllers: [UserController, TransactionController, AuthController, TransactionCategoryController, AccountController],
   providers: [
     // { provide: APP_FILTER, useClass: ExceptionHandler },
 
@@ -46,8 +52,10 @@ import { UserRepository } from './domain/ports/output/UserRepository';
     { provide: TransactionService, useClass: TransactionServiceImpl },
 
     { provide: TransactionCategoryRepository, useClass: TransactionCategoryRepositoryImpl },
+    { provide: TransactionCategoryService, useClass: TransactionCategoryServiceImpl },
     
     { provide: AccountRepository, useClass: AccountRepositoryImpl },
+    { provide: AccountService, useClass: AccountServiceImpl },
   ],
 })
 export class AppModule {}
