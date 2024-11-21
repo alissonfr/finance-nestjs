@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumberString, IsString, IsDateString } from 'class-validator';
+import { TransactionType } from 'src/domain/enums/transaction-type.enum';
 
 export class TransactionRequest {
   @ApiProperty({ example: '2023-11-09T14:30:00.000Z', description: 'Data da transação', required: true })
@@ -11,6 +12,9 @@ export class TransactionRequest {
   @IsNotEmpty({ message: 'A descrição é obrigatória.' })
   @IsString({ message: 'A descrição deve ser um texto.' })
   description: string;
+
+  @ApiProperty({ example: 'CREDIT_CARD', description: 'Tipo da transação' })
+  type: TransactionType;
 
   @ApiProperty({ example: '150.00', description: 'Valor da transação', required: true })
   @IsNotEmpty({ message: 'O valor é obrigatório.' })
@@ -26,6 +30,11 @@ export class TransactionRequest {
   @IsNotEmpty({ message: 'A conta é obrigatória.' })
   @IsNumberString({}, { message: 'O ID da conta deve ser numérico.' })
   accountId: number;
+
+  @ApiProperty({ example: 1, description: 'ID do cartão de crédito associada à transação', required: true })
+  @IsNotEmpty({ message: 'O cartão de crédito é obrigatório.' })
+  @IsNumberString({}, { message: 'O ID do cartão de crédito deve ser numérico.' })
+  creditCardId: number;
 
   @ApiProperty({ example: 123, description: 'ID do usuário associado à transação', required: true })
   @IsNotEmpty({ message: 'O ID do usuário é obrigatório.' })

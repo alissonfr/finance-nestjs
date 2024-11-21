@@ -8,11 +8,11 @@ import { AccountResponse } from 'src/adapters/model/response/account-response.dt
 export class AccountServiceImpl implements AccountService {
   constructor(
     @Inject(AccountRepository)
-    private readonly transactionCategoryRepository: AccountRepository,
+    private readonly accountRepository: AccountRepository,
   ) {}
 
   async find(): Promise<AccountResponse[]> {
-    const accounts = await this.transactionCategoryRepository.findAll();
+    const accounts = await this.accountRepository.findAll();
     return accounts.map(account => AccountMapper.toResponse(account));
   }
 }

@@ -7,6 +7,8 @@ import { TransactionMapper } from 'src/domain/mapper/transaction.mapper';
 import { TransactionCategoryRepository } from '../output/TransactionCategoryRepository';
 import { AccountRepository } from '../output/AccountRepository';
 import { UserRepository } from '../output/UserRepository';
+import { CreditCardRepository } from '../output/CreditCardRepository';
+import { TransactionType } from 'src/domain/enums/transaction-type.enum';
 
 @Injectable()
 export class TransactionServiceImpl implements TransactionService {
@@ -17,6 +19,8 @@ export class TransactionServiceImpl implements TransactionService {
     private readonly transactionCategoryRepository: TransactionCategoryRepository,
     @Inject(AccountRepository)
     private readonly accountRepository: AccountRepository,
+    @Inject(CreditCardRepository)
+    private readonly creditCardRepository: CreditCardRepository,
     @Inject(UserRepository)
     private readonly userRepository: UserRepository,
   ) {}
@@ -33,10 +37,17 @@ export class TransactionServiceImpl implements TransactionService {
 
   async save(request: TransactionRequest): Promise<TransactionResponse> {
     const category = await this.transactionCategoryRepository.findById(request.categoryId);
-    const account = await this.accountRepository.findById(request.accountId);
     const user = await this.userRepository.findById(request.userId);
-
-    return TransactionMapper.toResponse(await this.transactionRepository.save({ ...request, category, account, user }));
+    
+    if(request.type === TransactionType.CREDIT_CARD) {
+      const creditCard = await this.creditCardRepository.findById(request.creditCardId);
+      return TransactionMapper.toResponse(await this.transactionRepository.save({ ...request, category, user, creditCard }));
+    }
+    
+    if(request.type === TransactionType.ACCOUNT) {
+      const account = await this.accountRepository.findById(request.accountId);
+      return TransactionMapper.toResponse(await this.transactionRepository.save({ ...request, category, user, account }));
+    } 
   }
 
   async update(id: number, request: TransactionRequest): Promise<TransactionResponse> {
@@ -50,6 +61,7 @@ export class TransactionServiceImpl implements TransactionService {
       account: existingTransaction.account,
       category: existingTransaction.category,
       user: existingTransaction.user,
+      creditCard: existingTransaction.creditCard,
       ...request,
      }));
   }

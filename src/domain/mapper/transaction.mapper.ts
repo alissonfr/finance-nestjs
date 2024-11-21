@@ -1,6 +1,7 @@
 import { TransactionResponse } from "../../adapters/model/response/transaction-response.dto";
 import { Transaction } from "../model/transaction.entity";
 import { AccountMapper } from "./account.mapper";
+import { CreditCardMapper } from "./credit-card.mapper";
 import { TransactionCategoryMapper } from "./transaction-category.mapper";
 import { UserMapper } from "./user.mapper";
 
@@ -13,6 +14,7 @@ export class TransactionMapper {
     response.amount = entity.amount;
     response.category = TransactionCategoryMapper.toResponse(entity.category);
     response.account = AccountMapper.toResponse(entity.account);
+    response.creditCard = CreditCardMapper.toResponse(entity.creditCard);
     response.user = UserMapper.toResponse(entity.user);
     
     return response;

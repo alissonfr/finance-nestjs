@@ -15,6 +15,7 @@ export class TransactionRepositoryImpl implements TransactionRepository {
     const queryBuilder = this.repository.createQueryBuilder('transaction')
       .leftJoinAndSelect('transaction.category', 'category')
       .leftJoinAndSelect('transaction.account', 'account')
+      .leftJoinAndSelect('transaction.creditCard', 'creditCard')
       .leftJoinAndSelect('transaction.user', 'user');
   
     if (year) queryBuilder.andWhere('EXTRACT(YEAR FROM transaction.date) = :year', { year });

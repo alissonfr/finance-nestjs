@@ -25,6 +25,12 @@ import { TransactionCategoryService } from './domain/ports/input/TransactionCate
 import { TransactionCategoryServiceImpl } from './domain/ports/input/transaction-category.service';
 import { AccountService } from './domain/ports/input/AccountService';
 import { AccountServiceImpl } from './domain/ports/input/account.service';
+import { CreditCard } from './domain/model/credit-card.entity';
+import { CreditCardController } from './adapters/driver/credit-card.controller';
+import { CreditCardService } from './domain/ports/input/CreditCardService';
+import { CreditCardServiceImpl } from './domain/ports/input/credit-card.service';
+import { CreditCardRepository } from './domain/ports/output/CreditCardRepository';
+import { CreditCardRepositoryImpl } from './adapters/driven/credit-card.repository.impl';
 
 @Module({
   imports: [
@@ -39,9 +45,9 @@ import { AccountServiceImpl } from './domain/ports/input/account.service';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([User, Transaction, TransactionCategory, Account]),
+    TypeOrmModule.forFeature([User, Transaction, TransactionCategory, Account, CreditCard]),
   ],
-  controllers: [UserController, TransactionController, AuthController, TransactionCategoryController, AccountController],
+  controllers: [UserController, TransactionController, AuthController, TransactionCategoryController, AccountController, CreditCardController],
   providers: [
     // { provide: APP_FILTER, useClass: ExceptionHandler },
 
@@ -56,6 +62,9 @@ import { AccountServiceImpl } from './domain/ports/input/account.service';
     
     { provide: AccountRepository, useClass: AccountRepositoryImpl },
     { provide: AccountService, useClass: AccountServiceImpl },
+
+    { provide: CreditCardRepository, useClass: CreditCardRepositoryImpl },
+    { provide: CreditCardService, useClass: CreditCardServiceImpl },
   ],
 })
 export class AppModule {}

@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { TransactionCategoryResponse } from './transaction-category-response.dto';
 import { AccountResponse } from './account-response.dto';
 import { UserResponse } from './user-response.dto';
+import { CreditCardResponse } from './credit-card-response.dto';
 
 export class TransactionResponse {
   @ApiProperty({ example: 1, description: 'Unique identifier of the transaction' })
@@ -21,6 +22,9 @@ export class TransactionResponse {
 
   @ApiProperty({ type: AccountResponse, description: 'Account associated with the transaction' })
   account: AccountResponse;
+
+  @ApiProperty({ type: CreditCardResponse, description: 'Credit card associated with the transaction' })
+  creditCard: CreditCardResponse;
 
   @ApiProperty({ type: UserResponse, description: 'User associated with the transaction' })
   user: UserResponse;

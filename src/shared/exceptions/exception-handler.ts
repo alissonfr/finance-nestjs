@@ -1,7 +1,10 @@
 import { Catch, ExceptionFilter, ArgumentsHost, HttpException } from '@nestjs/common';
 import { Response } from 'express';
 import { HttpStatus } from '@nestjs/common';
-import { SqlErrorEnum } from 'src/domain/enums/sql-error.enum';
+
+export enum SqlErrorEnum {
+  UNIQUE_VIOLATION = '23505'
+}
 
 @Catch()
 export class ExceptionHandler implements ExceptionFilter {
