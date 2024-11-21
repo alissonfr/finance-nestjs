@@ -3,6 +3,7 @@ import { ApiTags, ApiResponse, ApiOperation, ApiParam } from '@nestjs/swagger';
 import { TransactionService } from '../../domain/ports/input/TransactionService';
 import { TransactionResponse } from '../model/response/transaction-response.dto';
 import { TransactionRequest } from '../model/request/transaction-request.dto';
+import { GroupedTransactionsResponse } from '../model/response/grouped-transactions-response.dto';
 
 @ApiTags('Transaction')
 @Controller('transaction')
@@ -22,6 +23,19 @@ export class TransactionController {
     @Query('month') month?: number,
   ): Promise<TransactionResponse[]> {
     return this.transactionService.find({ page, limit, year, month });
+  }
+
+  @Get("grouped")
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Retrieve all transactions grouped' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Transactions retrieved successfully', type: [GroupedTransactionsResponse] })
+  async findGrouped(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+    @Query('year') year?: number,
+    @Query('month') month?: number,
+  ): Promise<GroupedTransactionsResponse> {
+    return this.transactionService.findGrouped({ page, limit, year, month });
   }
 
   @Get(':transactionId')

@@ -11,6 +11,7 @@ export class TransactionMapper {
     response.transactionId = entity.transactionId;
     response.date = entity.date;
     response.description = entity.description;
+    response.type = entity.type;
     response.amount = entity.amount;
     response.category = TransactionCategoryMapper.toResponse(entity.category);
     response.account = AccountMapper.toResponse(entity.account);

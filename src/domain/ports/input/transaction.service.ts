@@ -9,6 +9,7 @@ import { AccountRepository } from '../output/AccountRepository';
 import { UserRepository } from '../output/UserRepository';
 import { CreditCardRepository } from '../output/CreditCardRepository';
 import { TransactionType } from 'src/domain/enums/transaction-type.enum';
+import { GroupedTransactionsResponse, GroupedAccount, GroupedCreditCard } from 'src/adapters/model/response/grouped-transactions-response.dto';
 
 @Injectable()
 export class TransactionServiceImpl implements TransactionService {
@@ -29,6 +30,41 @@ export class TransactionServiceImpl implements TransactionService {
     const transactions = await this.transactionRepository.find({ page, limit, year, month });
     return transactions.map(transaction => TransactionMapper.toResponse(transaction));
   }
+
+  async findGrouped({ page, limit, year, month }): Promise<GroupedTransactionsResponse> {
+    const transactions: TransactionResponse[] = await this.find({ page, limit, year, month })
+    const grouped: GroupedTransactionsResponse = {
+      accounts: [],
+      creditCards: []
+    };
+  
+    const accountMap = new Map<number, GroupedAccount>();
+    const creditCardMap = new Map<number, GroupedCreditCard>();
+  
+    transactions.forEach(transaction => {
+      if (transaction.account) {
+        const accountId = transaction.account.accountId;
+        if (!accountMap.has(accountId)) {
+          accountMap.set(accountId, { account: transaction.account, transactions: [] });
+        }
+        accountMap.get(accountId)!.transactions.push(transaction);
+      }
+  
+      if (transaction.creditCard) {
+        const creditCardId = transaction.creditCard.creditCardId;
+        if (!creditCardMap.has(creditCardId)) {
+          creditCardMap.set(creditCardId, { creditCard: transaction.creditCard, transactions: [] });
+        }
+        creditCardMap.get(creditCardId)!.transactions.push(transaction);
+      }
+    });
+  
+    grouped.accounts = Array.from(accountMap.values());
+    grouped.creditCards = Array.from(creditCardMap.values());
+  
+    return grouped;
+  }
+  
 
   async findById(id: number): Promise<TransactionResponse> {
     const transaction = await this.transactionRepository.findById(id);

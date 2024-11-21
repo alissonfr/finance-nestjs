@@ -3,6 +3,7 @@ import { TransactionCategoryResponse } from './transaction-category-response.dto
 import { AccountResponse } from './account-response.dto';
 import { UserResponse } from './user-response.dto';
 import { CreditCardResponse } from './credit-card-response.dto';
+import { TransactionType } from 'src/domain/enums/transaction-type.enum';
 
 export class TransactionResponse {
   @ApiProperty({ example: 1, description: 'Unique identifier of the transaction' })
@@ -13,6 +14,9 @@ export class TransactionResponse {
 
   @ApiProperty({ example: 'Grocery shopping', description: 'Description of the transaction' })
   description: string;
+
+  @ApiProperty({ example: 'CREDIT_CARD', description: 'Tipo da transação' })
+  type: TransactionType;
 
   @ApiProperty({ example: '150.00', description: 'Amount of the transaction' })
   amount: string;
