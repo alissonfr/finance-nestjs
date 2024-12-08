@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
-import { Transaction } from './transaction.entity';
-import { User } from './user.entity';
+import { Transaction } from 'src/transaction/entities/transaction.entity';
+import { User } from 'src/user/entities/user.entity';
 
 @Entity('bank_account')
 export class BankAccount {
@@ -13,7 +13,7 @@ export class BankAccount {
   @Column({ type: 'decimal', name: "initial_amount" })
   initialAmount: string;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.account)
+  @OneToMany(() => Transaction, (transaction) => transaction.bankAccount)
   transactions: Transaction[];
 
   @ManyToOne(() => User, (user) => user.accounts)
