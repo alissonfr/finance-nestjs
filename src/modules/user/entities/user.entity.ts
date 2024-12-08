@@ -1,6 +1,6 @@
-import { BankAccount } from 'src/bank-account/bank-account.entity';
-import { TransactionCategory } from 'src/transaction/entities/transaction-category.entity';
-import { Transaction } from 'src/transaction/entities/transaction.entity';
+import { BankAccount } from 'src/modules/bank-account/bank-account.entity';
+import { TransactionCategory } from 'src/modules/transaction/entities/transaction-category.entity';
+import { Transaction } from 'src/modules/transaction/entities/transaction.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity('users')

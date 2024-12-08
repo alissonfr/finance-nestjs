@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { TransactionCategory } from './transaction-category.entity';
-import { BankAccount } from 'src/bank-account/bank-account.entity';
-import { User } from 'src/user/entities/user.entity';
+import { BankAccount } from 'src/modules/bank-account/bank-account.entity';
+import { User } from 'src/modules/user/entities/user.entity';
 
 @Entity('transaction')
 export class Transaction {

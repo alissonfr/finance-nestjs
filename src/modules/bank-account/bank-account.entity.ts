@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
-import { Transaction } from 'src/transaction/entities/transaction.entity';
-import { User } from 'src/user/entities/user.entity';
+import { Transaction } from 'src/modules/transaction/entities/transaction.entity';
+import { User } from 'src/modules/user/entities/user.entity';
 
 @Entity('bank_account')
 export class BankAccount {
