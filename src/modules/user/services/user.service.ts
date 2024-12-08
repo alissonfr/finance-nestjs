@@ -1,7 +1,6 @@
-import { CreateUserDto } from "../dto/create-user.dto";
-import { UserResponseDto } from "../dto/user-response.dto";
+import { User } from "../entities/user.entity";
 
 export interface UserService {
-  create(input: CreateUserDto): Promise<UserResponseDto>;
-  findOne(userId: number): Promise<UserResponseDto>;
+  create(input: User): Promise<User>;
+  findOne(userId: number): Promise<User>;
 }

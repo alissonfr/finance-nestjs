@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './modules/user/user.module';
+import { Transaction } from 'typeorm';
+import { TransactionModule } from './modules/transaction/transaction.module';
 
 @Module({
   imports: [
@@ -15,7 +17,8 @@ import { UserModule } from './modules/user/user.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    UserModule
+    UserModule,
+    TransactionModule
   ],
   providers: [],
 })

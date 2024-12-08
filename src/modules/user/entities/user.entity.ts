@@ -8,16 +8,16 @@ export class User {
   @PrimaryGeneratedColumn()
   userId?: number;
 
-  @Column({ nullable: false })
+  @Column()
   name: string;
 
-  @Column({ nullable: false, unique: true})
+  @Column({ unique: true })
   email: string;
 
-  @Column({ nullable: false, unique: true})
+  @Column({ unique: true })
   cpf: string;
 
-  @Column({ nullable: false })
+  @Column()
   password: string;
 
   @OneToMany(() => Transaction, (transaction) => transaction.user)

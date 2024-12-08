@@ -1,8 +1,6 @@
-import { CreateTransactionDto } from "../dto/create-transaction.dto";
-import { TransactionResponseDto } from "../dto/transaction-response.dto";
-
+import { Transaction } from "../entities/transaction.entity";
 
 export interface TransactionService {
-  create(input: CreateTransactionDto): Promise<TransactionResponseDto>;
-  findOne(transactionId: number): Promise<TransactionResponseDto>;
+  create(input: Transaction): Promise<Transaction>;
+  findOne(transactionId: number): Promise<Transaction>;
 }

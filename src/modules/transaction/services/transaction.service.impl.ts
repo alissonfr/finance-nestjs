@@ -1,8 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { CreateTransactionDto } from "../dto/create-transaction.dto";
-import { TransactionResponseDto } from "../dto/transaction-response.dto";
 import { TransactionService } from "./transaction.service";
 import { Transaction } from "../entities/transaction.entity";
 
@@ -14,29 +12,17 @@ export class TransactionServiceImpl implements TransactionService {
     private readonly transactionRepository: Repository<Transaction>,
   ) {}
 
-  async create(data: CreateTransactionDto): Promise<TransactionResponseDto> {
-    const transaction = this.transactionRepository.create(data);
+  async create(input: Transaction): Promise<Transaction> {
+    const transaction = this.transactionRepository.create(input);
     const savedTransaction = await this.transactionRepository.save(transaction);
-    return this.toResponseDto(savedTransaction);
+    return savedTransaction;
   }
 
-  async findOne(transactionId: number): Promise<TransactionResponseDto> {
+  async findOne(transactionId: number): Promise<Transaction> {
     const transaction = await this.transactionRepository.findOne({ where: { transactionId } });
     if (!transaction) {
-      throw new Error('Transaction not found');
+      throw new BadRequestException('Transaction not found');
     }
-    return this.toResponseDto(transaction);
-  }
-
-  private toResponseDto(transaction: Transaction): TransactionResponseDto {
-    return {
-      transactionId: transaction.transactionId, 
-      date: transaction.date, 
-      description: transaction.description, 
-      amount: transaction.amount, 
-      category: transaction.category, 
-      bankAccount: transaction.bankAccount, 
-      user: transaction.user, 
-    };
+    return transaction;
   }
 }

@@ -1,19 +1,21 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
-import { CreateTransactionDto } from '../dto/create-transaction.dto';
-import { TransactionResponseDto } from '../dto/transaction-response.dto';
+import { Controller, Post, Body, Get, Param, Inject } from '@nestjs/common';
 import { TransactionService } from '../services/transaction.service';
+import { Transaction } from '../entities/transaction.entity';
 
 @Controller('transactions')
 export class TransactionController {
-  constructor(private readonly transactionService: TransactionService) {}
+  constructor(
+    @Inject('TransactionService')
+    private readonly transactionService: TransactionService
+  ) {}
 
   @Post()
-  async create(@Body() createTransactionDto: CreateTransactionDto): Promise<TransactionResponseDto> {
-    return this.transactionService.create(createTransactionDto);
+  async create(@Body() input: Transaction): Promise<Transaction> {
+    return this.transactionService.create(input);
   }
 
   @Get(':transactionId')
-  async findOne(@Param('transactionId') transactionId: number): Promise<TransactionResponseDto> {
+  async findOne(@Param('transactionId') transactionId: number): Promise<Transaction> {
     return this.transactionService.findOne(transactionId);
   }
 }

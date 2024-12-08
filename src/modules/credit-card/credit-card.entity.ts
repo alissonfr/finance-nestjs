@@ -3,17 +3,14 @@ import { User } from '../user/entities/user.entity';
 
 @Entity('credit_cards')
 export class CreditCard {
-    @PrimaryGeneratedColumn()
-    creditCardId?: number;
+  @PrimaryGeneratedColumn()
+  creditCardId?: number;
 
   @Column()
   cardName: string;
 
   @Column('decimal', { precision: 12, scale: 2 })
   limit: number;
-
-  @Column('decimal', { precision: 12, scale: 2 })
-  availableLimit: number;
 
   @Column()
   dueDate: number;
