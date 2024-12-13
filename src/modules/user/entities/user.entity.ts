@@ -1,11 +1,10 @@
-import { BankAccount } from 'src/modules/bank-account/bank-account.entity';
-import { TransactionCategory } from 'src/modules/transaction/entities/transaction-category.entity';
-import { Transaction } from 'src/modules/transaction/entities/transaction.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { BankAccount } from 'src/modules/bank-account/entities/bank-account.entity';
+import { CreditCard } from 'src/modules/credit-card/entities/credit-card.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: "user_id" })
   userId?: number;
 
   @Column()
@@ -20,12 +19,9 @@ export class User {
   @Column()
   password: string;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.user)
-  transactions: Transaction[];
+  @OneToMany(() => BankAccount, bankAccount => bankAccount.user)
+  bankAccounts: BankAccount[];
 
-  @OneToMany(() => BankAccount, (account) => account.user)
-  accounts: BankAccount[];
-
-  @OneToMany(() => TransactionCategory, (category) => category.user)
-  categories: TransactionCategory[];
+  @OneToMany(() => CreditCard, bankAccount => bankAccount.user)
+  creditCards: CreditCard[];
 }
