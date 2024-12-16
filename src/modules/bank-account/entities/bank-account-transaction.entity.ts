@@ -16,6 +16,12 @@ export class BankAccountTransaction {
   @Column()
   notes: string;
 
+  @Column()
+  date: Date;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0, }) 
+  amount: number;
+
   @Column({ type: 'enum', enum: Operation })
   operation: Operation;
 

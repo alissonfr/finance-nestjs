@@ -15,7 +15,6 @@ export class BankAccount {
 
   @ManyToOne(() => User, user => user.bankAccounts)
   @JoinColumn({ name: "user_id" })
-  @JoinColumn({ name: "user_id" })
   user: User;
 
   @OneToMany(() => BankAccountTransaction, transaction => transaction.bankAccount)

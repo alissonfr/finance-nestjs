@@ -7,17 +7,16 @@ import { User } from '../entities/user.entity';
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    private readonly repository: Repository<User>,
   ) {}
 
   async create(data: User): Promise<User> {
-    const user = this.userRepository.create(data);
-    const savedUser = await this.userRepository.save(user);
-    return savedUser;
+    const user = this.repository.create(data);
+    return await this.repository.save(user);
   }
 
   async findOne(userId: number): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { userId } });
+    const user = await this.repository.findOne({ where: { userId } });
     if (!user) {
       throw new BadRequestException('User not found');
     }
@@ -25,7 +24,7 @@ export class UserService {
   }
 
   async findByEmail(email: string): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { email } });
+    const user = await this.repository.findOne({ where: { email } });
     if (!user) {
       throw new BadRequestException('User not found');
     }

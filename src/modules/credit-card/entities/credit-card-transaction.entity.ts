@@ -11,6 +11,9 @@ export class CreditCardTransaction {
     description: string;
 
     @Column()
+    date: Date;
+
+    @Column()
     notes: string;
 
     @Column({ type: 'decimal', precision: 10, scale: 2, default: 0, }) 
