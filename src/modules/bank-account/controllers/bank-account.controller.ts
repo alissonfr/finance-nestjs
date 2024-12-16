@@ -14,7 +14,7 @@ export class BankAccountController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  async create(@Body() input: { name: string, initialAmount: number }, @Request() req: UserRequest): Promise<BankAccount> {
+  async create(@Body() input: { name: string, initialAmount: string }, @Request() req: UserRequest): Promise<BankAccount> {
     return this.bankAccountService.create({
       ...input,
       user: req.user

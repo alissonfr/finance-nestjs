@@ -3,10 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BankAccount } from '../entities/bank-account.entity';
 import { User } from 'src/modules/user/entities/user.entity';
+import { parseCurrencyToNumber } from 'src/shared/utils/parser';
 
 class CreateBankAccountInput {
   name: string;
-  initialAmount: number;
+  initialAmount: string;
   user: User;
 }
 
@@ -18,7 +19,10 @@ export class BankAccountService {
   ) {}
 
   async create(input: CreateBankAccountInput): Promise<BankAccount> {
-    const account = this.repository.create(input);
+    const account = this.repository.create({
+      ...input,
+      initialAmount: parseCurrencyToNumber(input.initialAmount)
+    });
     return await this.repository.save(account);
   }
 
