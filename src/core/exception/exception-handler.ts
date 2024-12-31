@@ -1,5 +1,5 @@
 import { Catch, ExceptionFilter, ArgumentsHost, HttpException } from '@nestjs/common';
-import { Response } from 'express';
+import e, { Response } from 'express';
 import { HttpStatus } from '@nestjs/common';
 
 export enum SqlErrorEnum {
@@ -43,6 +43,8 @@ export class ExceptionHandler implements ExceptionFilter {
     if (exception instanceof HttpException) {
       return exception.getResponse();
     }
+
+    console.error(exception);
     return 'Erro no servidor.';
   }
 }

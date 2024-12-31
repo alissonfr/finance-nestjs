@@ -1,13 +1,12 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BankAccount } from '../entities/bank-account.entity';
 import { User } from 'src/modules/user/entities/user.entity';
-import { parseCurrencyToNumber } from 'src/shared/utils/parser';
 
 class CreateBankAccountInput {
   name: string;
-  initialAmount: string;
+  initialAmount: number;
   user: User;
 }
 
@@ -18,17 +17,14 @@ export class BankAccountService {
     private readonly repository: Repository<BankAccount>,
   ) {}
 
-  async create(input: CreateBankAccountInput): Promise<BankAccount> {
-    const account = this.repository.create({
-      ...input,
-      initialAmount: parseCurrencyToNumber(input.initialAmount)
-    });
-    return await this.repository.save(account);
-  }
+  async find(filters?: { name?: string }): Promise<BankAccount[]> {
+    const bankAccounts = this.repository.createQueryBuilder();
 
-  async find(): Promise<BankAccount[]> {
-    const accounts = await this.repository.find();
-    return accounts;
+    if(filters.name) {
+      bankAccounts.orWhere('name ILIKE :name', { name: `%${filters.name}%` });
+    }
+
+    return bankAccounts.getMany();
   }
 
   async findOne(bankAccountId: number): Promise<BankAccount> {
@@ -37,6 +33,24 @@ export class BankAccountService {
       throw new BadRequestException('Bank account not found');
     }
     return account;
+  }
+
+  async create(input: CreateBankAccountInput): Promise<BankAccount> {
+    const account = this.repository.create(input);
+    return await this.repository.save(account);
+  }
+
+  async update(id: number, updateData: { name?: string, initialAmount?: string;}): Promise<BankAccount> {
+    const bankAccount = await this.findOne(id);
+    if (!bankAccount) {
+      throw new NotFoundException(`Bank account with ID ${id} not found.`);
+    }
+    Object.assign(bankAccount, updateData);
+    return this.repository.save(bankAccount);
+  }
+
+  async delete(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 
 }
