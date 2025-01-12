@@ -1,4 +1,5 @@
 import { BankAccount } from 'src/modules/bank-account/entities/bank-account.entity';
+import { Category } from 'src/modules/category/entities/category.entity';
 import { CreditCard } from 'src/modules/credit-card/entities/credit-card.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -18,6 +19,9 @@ export class User {
 
   @Column()
   password: string;
+
+  @OneToMany(() => Category, category => category.user)
+  categories: Category[];
 
   @OneToMany(() => BankAccount, bankAccount => bankAccount.user)
   bankAccounts: BankAccount[];

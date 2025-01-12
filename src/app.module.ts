@@ -1,10 +1,13 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './modules/user/user.module';
-import { BankAccountModule } from './modules/bank-account/bank-account.module';
-import { CreditCardModule } from './modules/credit-card/credit-card.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
+import { Module } from '@nestjs/common'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { UserModule } from './modules/user/user.module'
+import { BankAccountModule } from './modules/bank-account/bank-account.module'
+import { CreditCardModule } from './modules/credit-card/credit-card.module'
+import { AuthModule } from './modules/auth/auth.module'
+import { ConfigModule } from '@nestjs/config'
+import { CategoryModule } from './modules/category/category.module'
+import { PaymentMethodModule } from './modules/payment-method/category.module'
+import { ReportModule } from './modules/report/report.module'
 
 @Module({
   imports: [
@@ -24,6 +27,9 @@ import { ConfigModule } from '@nestjs/config';
     BankAccountModule,
     CreditCardModule,
     AuthModule,
+    CategoryModule,
+    PaymentMethodModule,
+    ReportModule,
   ],
   providers: [],
 })
