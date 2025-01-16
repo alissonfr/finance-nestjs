@@ -1,0 +1,5 @@
+export enum DeleteTransactionOptions {
+    CURRENT = "CURRENT",
+    CURRENT_AND_NEXT = "CURRENT_AND_NEXT",
+    CURRENT_AND_NEXT_AND_PREVIOUS = "CURRENT_AND_NEXT_AND_PREVIOUS"
+}
