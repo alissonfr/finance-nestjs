@@ -21,13 +21,13 @@ services:
             file: ./finance-nestjs/docker-compose.yml
             service: finance-nestjs
         depends_on:
-            - postgres
+            - finance-postgres
     finance-postgres:
-        image: postgres:alpine
+        image: postgres:17
         environment:
-            POSTGRES_USER: user
-            POSTGRES_PASSWORD: password
-            POSTGRES_DB: mydatabase
+            POSTGRES_DB: finance
+            POSTGRES_USER: admin
+            POSTGRES_PASSWORD_FILE: /run/secrets/db-password
         ports:
             - "5432:5432"
 ```
