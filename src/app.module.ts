@@ -12,7 +12,9 @@ import { UserModule } from "./modules/user/user.module"
 
 @Module({
     imports: [
-        ConfigModule.forRoot(),
+        ConfigModule.forRoot({
+            envFilePath: '.env',
+        }),
         TypeOrmModule.forRoot({
             type: "postgres",
             host: process.env.DB_HOST,

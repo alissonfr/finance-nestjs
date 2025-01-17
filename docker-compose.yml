@@ -1,8 +1,30 @@
-version: '3.8'
 services:
   finance-nestjs:
+    container_name: finance-nestjs
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    env_file: 
+      - ./.env
+    networks:
+      - finance-network
+  finance-postgres:
+    image: postgres:17
+    container_name: finance-postgres
+    environment:
+        POSTGRES_DB: finance
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: admin
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+        - "5432:5432"
+    networks:
+      - finance-network
+volumes:
+  pg_data:
+networks:
+  finance-network:
+    driver: bridge
