@@ -86,7 +86,7 @@ export class BankAccountTransactionService {
       const transactions = []
 
       if (numberOfInstallments <= 0) {
-        transactions.push(input)
+        transactions.push({ ...input, finTransactionId: FIN_TRANSACTION_ID })
       }
 
       for (let i = 0; i < numberOfInstallments; i++) {

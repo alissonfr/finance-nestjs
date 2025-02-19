@@ -42,7 +42,6 @@ export class UserService {
         return {
             name: "Carteira",
             user,
-            // logo: "https://portalvhdshl0fsz1rywfcp.blob.core.windows.net/instituicoes-bancarias-logo/carteira.jpg",
         }
     }
 

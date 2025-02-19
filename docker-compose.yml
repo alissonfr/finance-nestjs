@@ -1,15 +1,4 @@
 services:
-  finance-nestjs:
-    container_name: finance-nestjs
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    env_file: 
-      - ./.env
-    networks:
-      - finance-network
   finance-postgres:
     image: postgres:17
     container_name: finance-postgres

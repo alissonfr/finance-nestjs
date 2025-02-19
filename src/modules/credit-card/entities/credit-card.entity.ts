@@ -10,7 +10,7 @@ export class CreditCard {
     @Column()
     name: string
 
-    @Column({ name: "credit_limit" })
+    @Column({ name: "credit_limit", type: 'decimal', precision: 10, scale: 2, default: 0, }) 
     creditLimit: number
 
     @Column({ name: "due_day" })

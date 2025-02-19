@@ -24,7 +24,8 @@ import { UserModule } from "./modules/user/user.module"
             database: process.env.DB_NAME,
             entities: [__dirname + "/**/*.entity{.ts,.js}"],
             autoLoadEntities: true,
-            synchronize: true,
+            synchronize: true, // do not set it true in production application
+            // seeds: ['src/seeds/**/*.seed.ts'],   
         }),
         UserModule,
         BankAccountModule,
