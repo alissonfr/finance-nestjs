@@ -13,7 +13,8 @@ export class CreditCardTransactionService {
   ) {}
 
     async find(): Promise<CreditCardTransaction[]> {
-        const creditCards = this.repository.createQueryBuilder()
+        const creditCards = this.repository.createQueryBuilder("creditCard")
+            .leftJoinAndSelect("creditCard.category", "category")
 
         return creditCards.getMany()
     }

@@ -19,7 +19,7 @@ export class BankAccountTransactionService {
     private readonly repository: Repository<BankAccountTransaction>,
   ) {}
 
-  async find({ month, year, name }): Promise<BankAccountTransactionResponseDTO[]> {
+  async find({ month, year, search, sort }): Promise<BankAccountTransactionResponseDTO[]> {
     const transactions = this.repository
       .createQueryBuilder("transaction")
       .leftJoinAndSelect("transaction.category", "category")
@@ -27,8 +27,14 @@ export class BankAccountTransactionService {
       .leftJoinAndSelect("transaction.paymentMethod", "paymentMethod")
       .orderBy("transaction.date", "DESC")
 
-    if (name) {
-      transactions.orWhere("name ILIKE :name", { name: `%${name}%` })
+    if (search) {
+      transactions.orWhere("transaction.description ILIKE :search", { search: `%${search}%` })
+      transactions.orWhere("transaction.notes ILIKE :search", { search: `%${search}%` })
+      transactions.orWhere("bankAccount.name ILIKE :search", { search: `%${search}%` })
+    }
+
+    if(sort) {
+      transactions.orderBy(`transaction.${sort}`, "DESC")
     }
 
     if (month && year) {

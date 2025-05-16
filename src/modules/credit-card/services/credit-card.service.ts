@@ -14,10 +14,13 @@ export class CreditCardService {
 
     async findWithTransactions({ month, year }): Promise<CreditCardWithTransaction[]> {
         const queryBuilder = this.repository.createQueryBuilder("creditCard")
-            .leftJoinAndSelect("creditCard.transactions", "transaction")
+            .leftJoinAndSelect("creditCard.issuer", "issuer")
+            .leftJoinAndSelect("creditCard.transactions", "transaction", 
+                "EXTRACT(YEAR FROM transaction.date) = :year AND EXTRACT(MONTH FROM transaction.date) = :month", 
+                { year, month }
+            )
+            .leftJoinAndSelect("transaction.category", "category")
             .leftJoinAndSelect("creditCard.user", "user")
-            .andWhere("EXTRACT(YEAR FROM transaction.date) = :year", { year })
-            .andWhere("EXTRACT(MONTH FROM transaction.date) = :month", { month })
             .addSelect(qb => {
                 return qb
                     .select("SUM(transaction.amount)", "totalAmount")
@@ -31,37 +34,29 @@ export class CreditCardService {
 
         console.log(result)
     
-        return result.entities.map(creditCard => ({
+        return result.entities.map((creditCard, index) => ({
             creditCardId: creditCard.creditCardId,
             name: creditCard.name,
             user: creditCard.user,
+            issuer: creditCard.issuer,
             transactions: creditCard.transactions,
-            totalAmount: result.raw[0].totalAmount ?? "0.00",
+            totalAmount: result.raw[index]?.totalAmount ?? "0.00",
             dueDate: new Date(`${year}-${month}-${creditCard.dueDay}`).toISOString(),
             closingDate: new Date(`${year}-${month}-${creditCard.closingDay}`).toISOString(),
         })) as unknown as CreditCardWithTransaction[];
-    }
-    
+    }    
 
     async find(filters?: { name?: string }): Promise<CreditCardResponse[]> {
         const queryBuilder = this.repository
             .createQueryBuilder("creditCard")
+            .leftJoinAndSelect("creditCard.issuer", "issuer")
             .leftJoinAndSelect("creditCard.user", "user");
 
         if (filters.name) {
             queryBuilder.where("creditCard.name ILIKE :name", { name: `%${filters.name}%` })
         }
 
-        const results = await queryBuilder.getRawAndEntities()
-
-        return results.entities.map((result) => ({
-            creditCardId: result.creditCardId,
-            name: result.name,
-            creditLimit: result.creditLimit,
-            dueDay: result.dueDay,
-            closingDay: result.closingDay,
-            user: result.user,
-        }))
+        return await queryBuilder.getMany()
     }
 
     async findOne(creditCardId: number): Promise<CreditCard> {

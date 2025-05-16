@@ -1,6 +1,7 @@
 import { User } from "src/modules/user/entities/user.entity"
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { CreditCardTransaction } from "./credit-card-transaction.entity"
+import { Issuer } from "src/modules/issuer/entities/issuer.entity"
 
 @Entity("credit_card")
 export class CreditCard {
@@ -19,10 +20,14 @@ export class CreditCard {
     @Column({ name: "closing_day" })
     closingDay: number
 
-    @ManyToOne(() => User, user => user.bankAccounts)
+    @ManyToOne(() => User, user => user.creditCards)
     @JoinColumn({ name: "user_id" })
     user: User
 
-    @OneToMany(() => CreditCardTransaction, transaction => transaction.creditCard)
+    @ManyToOne(() => Issuer, issuer => issuer.creditCards)
+    @JoinColumn({ name: "issuer_id" })
+    issuer: Issuer
+
+    @OneToMany(() => CreditCardTransaction, transaction => transaction.creditCard, { cascade: true })
     transactions: CreditCardTransaction[]
 }

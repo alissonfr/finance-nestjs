@@ -35,11 +35,12 @@ export class BankAccountTransactionController {
     @Get()
     @UseGuards(JwtAuthGuard)
     async find(
-        @Query("name") name?: string,
+        @Query("search") search?: string,
+        @Query("sort") sort?: string,
         @Query("month") month?: string,
         @Query("year") year?: string,
     ): Promise<BankAccountTransactionResponseDTO[]> {
-        return this.service.find({ name, month, year })
+        return this.service.find({ search, sort, month, year })
     }
 
     @UseGuards(JwtAuthGuard)

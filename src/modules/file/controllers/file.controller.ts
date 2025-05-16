@@ -31,7 +31,7 @@ export class FileController {
     }
 
     @Get("public/:directory/:filename")
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     async getPublicFile(@Param("directory") directory: string, @Param("filename") filename: string, @Res() res: Response) {
         const filePath = join(__dirname, "..", "..", "..", "..", "uploads/public", directory, filename)
         if (!existsSync(filePath)) {

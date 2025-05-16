@@ -9,6 +9,7 @@ import { FileModule } from "./modules/file/file.module"
 import { PaymentMethodModule } from "./modules/payment-method/category.module"
 import { ReportModule } from "./modules/report/report.module"
 import { UserModule } from "./modules/user/user.module"
+import { IssuerModule } from "./modules/issuer/issuer.module"
 
 @Module({
     imports: [
@@ -35,6 +36,7 @@ import { UserModule } from "./modules/user/user.module"
         PaymentMethodModule,
         ReportModule,
         FileModule,
+        IssuerModule
     ],
     providers: [],
 })
