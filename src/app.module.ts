@@ -10,24 +10,14 @@ import { PaymentMethodModule } from "./modules/payment-method/category.module"
 import { ReportModule } from "./modules/report/report.module"
 import { UserModule } from "./modules/user/user.module"
 import { IssuerModule } from "./modules/issuer/issuer.module"
+import { dbOptions } from "./database/options"
 
 @Module({
     imports: [
         ConfigModule.forRoot({
-            envFilePath: '.env',
+            envFilePath: `.env.${process.env.NODE_ENV || 'local'}`,
         }),
-        TypeOrmModule.forRoot({
-            type: "postgres",
-            host: process.env.DB_HOST,
-            port: Number(process.env.DB_PORT || 5432),
-            username: process.env.DB_USER,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_NAME,
-            entities: [__dirname + "/**/*.entity{.ts,.js}"],
-            autoLoadEntities: true,
-            synchronize: true, // do not set it true in production application
-            // seeds: ['src/seeds/**/*.seed.ts'],   
-        }),
+        TypeOrmModule.forRoot(dbOptions),
         UserModule,
         BankAccountModule,
         CreditCardModule,

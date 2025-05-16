@@ -1,3 +1,4 @@
+-- Active: 1747409926342@@127.0.0.1@5432@finance
 INSERT INTO users (user_id, name, email, cpf, password) VALUES
 (1, 'Alisson Rodrigues', 'alisson@gmail.com', '12345678901', '$2b$10$4u1s.HiYa7VLM0Pjini4eeIvvAt3aUbOhortBkS3VI5mqreoNye2O');
 
