@@ -46,7 +46,6 @@ export class AuthService {
     async register(user: User): Promise<AuthResponseDTO> {
         user.password = await bcrypt.hash(user.password, 10)
         const newUser = await this.userService.create(user)
-        console.log("aaaaa")
         return this.login(newUser as LoginRequestDTO)
     }
 }

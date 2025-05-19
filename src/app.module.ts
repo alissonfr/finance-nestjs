@@ -10,7 +10,7 @@ import { PaymentMethodModule } from "./modules/payment-method/category.module"
 import { ReportModule } from "./modules/report/report.module"
 import { UserModule } from "./modules/user/user.module"
 import { IssuerModule } from "./modules/issuer/issuer.module"
-import { dbOptions } from "./database/options"
+import { dbOptions } from "./database/data-source"
 
 @Module({
     imports: [
