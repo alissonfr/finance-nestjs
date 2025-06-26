@@ -3,14 +3,9 @@ import { InjectRepository } from "@nestjs/typeorm"
 import { User } from "src/modules/user/entities/user.entity"
 import { Operation } from "src/shared/enum/operation.enum"
 import { Repository } from "typeorm"
+import { BankAccountRequest } from "../dtos/bank-account-request.dto"
 import { BankAccountResponse } from "../dtos/bank-account-response.dto"
 import { BankAccount } from "../entities/bank-account.entity"
-
-class CreateBankAccountInput {
-    name: string
-    initialAmount: number
-    user: User
-}
 
 @Injectable()
 export class BankAccountService {
@@ -56,12 +51,12 @@ export class BankAccountService {
         return account
     }
 
-    async create(input: CreateBankAccountInput): Promise<BankAccount> {
-        const account = this.repository.create(input)
+    async create(input: BankAccountRequest, user: User): Promise<BankAccount> {
+        const account = this.repository.create({ ...input, user })
         return await this.repository.save(account)
     }
 
-    async update(id: number, updateData: { name?: string; initialAmount?: string }): Promise<BankAccount> {
+    async update(id: number, updateData: BankAccountRequest): Promise<BankAccount> {
         const bankAccount = await this.findOne(id)
         if (!bankAccount) {
             throw new NotFoundException("Conta bancária não encontrada.")

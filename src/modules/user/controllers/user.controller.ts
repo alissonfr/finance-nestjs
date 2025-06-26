@@ -1,25 +1,31 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { User } from '../entities/user.entity';
-import { UserService } from '../services/user.service';
-import { JwtAuthGuard } from 'src/shared/guards/jwt-auth.guard';
+import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common"
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from "@nestjs/swagger"
+import { JwtAuthGuard } from "src/shared/guards/jwt-auth.guard"
+import { UserRequestDTO } from "../dtos/user-request.dto"
+import { User } from "../entities/user.entity"
+import { UserService } from "../services/user.service"
 
-@Controller('users')
-@ApiTags('users')
+@Controller("users")
+@ApiTags("users")
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 export class UserController {
-  constructor(
-    private readonly userService: UserService
-  ) {}
+    constructor(private readonly userService: UserService) {}
 
-  @Post()
-  @UseGuards(JwtAuthGuard)
-  async create(@Body() input: User): Promise<User> {
-    return this.userService.create(input);
-  }
+    @Post()
+    @ApiBody({ type: UserRequestDTO })
+    async create(@Body() input: UserRequestDTO): Promise<User> {
+        return this.userService.create(input)
+    }
 
-  @Get(':userId')
-  @UseGuards(JwtAuthGuard)
-  async findOne(@Param('userId') userId: number): Promise<User> {
-    return this.userService.findOne(userId);
-  }
+    @Get(":userId")
+    @ApiParam({
+        name: "userId",
+        type: Number,
+        description: "ID do usuário",
+        example: 123,
+    })
+    async findOne(@Param("userId") userId: number): Promise<User> {
+        return this.userService.findOne(userId)
+    }
 }

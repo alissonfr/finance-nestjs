@@ -1,9 +1,11 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common"
 import { InjectRepository } from "@nestjs/typeorm"
+import { User } from "src/modules/user/entities/user.entity"
 import { Repository } from "typeorm"
-import { CreditCard } from "../entities/credit-card.entity"
+import { CreditCardRequest } from "../dtos/credit-card-request.dto"
 import { CreditCardResponse } from "../dtos/credit-card-response.dto"
 import { CreditCardWithTransaction } from "../dtos/credit-card-with-transaction.dto"
+import { CreditCard } from "../entities/credit-card.entity"
 
 @Injectable()
 export class CreditCardService {
@@ -13,11 +15,14 @@ export class CreditCardService {
     ) {}
 
     async findWithTransactions({ month, year }): Promise<CreditCardWithTransaction[]> {
-        const queryBuilder = this.repository.createQueryBuilder("creditCard")
+        const queryBuilder = this.repository
+            .createQueryBuilder("creditCard")
             .leftJoinAndSelect("creditCard.issuer", "issuer")
-            .leftJoinAndSelect("creditCard.transactions", "transaction", 
-                "EXTRACT(YEAR FROM transaction.date) = :year AND EXTRACT(MONTH FROM transaction.date) = :month", 
-                { year, month }
+            .leftJoinAndSelect(
+                "creditCard.transactions",
+                "transaction",
+                "EXTRACT(YEAR FROM transaction.date) = :year AND EXTRACT(MONTH FROM transaction.date) = :month",
+                { year, month },
             )
             .leftJoinAndSelect("transaction.category", "category")
             .leftJoinAndSelect("creditCard.user", "user")
@@ -27,13 +32,13 @@ export class CreditCardService {
                     .from("credit_card_transaction", "transaction")
                     .where("transaction.credit_card_id = creditCard.credit_card_id")
                     .andWhere("EXTRACT(YEAR FROM transaction.date) = :year", { year })
-                    .andWhere("EXTRACT(MONTH FROM transaction.date) = :month", { month });
-            }, "totalAmount");
-    
-        const result = await queryBuilder.getRawAndEntities();
+                    .andWhere("EXTRACT(MONTH FROM transaction.date) = :month", { month })
+            }, "totalAmount")
+
+        const result = await queryBuilder.getRawAndEntities()
 
         console.log(result)
-    
+
         return result.entities.map((creditCard, index) => ({
             creditCardId: creditCard.creditCardId,
             name: creditCard.name,
@@ -43,14 +48,14 @@ export class CreditCardService {
             totalAmount: result.raw[index]?.totalAmount ?? "0.00",
             dueDate: new Date(`${year}-${month}-${creditCard.dueDay}`).toISOString(),
             closingDate: new Date(`${year}-${month}-${creditCard.closingDay}`).toISOString(),
-        })) as unknown as CreditCardWithTransaction[];
-    }    
+        })) as unknown as CreditCardWithTransaction[]
+    }
 
     async find(filters?: { name?: string }): Promise<CreditCardResponse[]> {
         const queryBuilder = this.repository
             .createQueryBuilder("creditCard")
             .leftJoinAndSelect("creditCard.issuer", "issuer")
-            .leftJoinAndSelect("creditCard.user", "user");
+            .leftJoinAndSelect("creditCard.user", "user")
 
         if (filters.name) {
             queryBuilder.where("creditCard.name ILIKE :name", { name: `%${filters.name}%` })
@@ -67,12 +72,12 @@ export class CreditCardService {
         return account
     }
 
-    async create(input: CreditCard): Promise<CreditCard> {
-        const account = this.repository.create(input)
+    async create(input: CreditCardRequest, user: User): Promise<CreditCard> {
+        const account = this.repository.create({ ...input, user })
         return await this.repository.save(account)
     }
 
-    async update(id: number, updateData: { name: string, creditLimit: number, dueDay: number, closingDay: number }): Promise<CreditCard> {
+    async update(id: number, updateData: CreditCardRequest): Promise<CreditCard> {
         const creditCard = await this.findOne(id)
         if (!creditCard) {
             throw new NotFoundException("Conta bancária não encontrada.")

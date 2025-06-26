@@ -1,0 +1,1337 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/v1/users": {
+      "post": {
+        "operationId": "UserController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/{userId}": {
+      "get": {
+        "operationId": "UserController_findOne",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "description": "ID do usuário",
+            "schema": {
+              "example": 123,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/bank-accounts": {
+      "post": {
+        "operationId": "BankAccountController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BankAccountRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "bank-accounts"
+        ]
+      },
+      "get": {
+        "operationId": "BankAccountController_find",
+        "parameters": [
+          {
+            "name": "name",
+            "required": false,
+            "in": "query",
+            "description": "Filtrar contas pelo nome",
+            "schema": {
+              "example": "Nubank",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "bank-accounts"
+        ]
+      }
+    },
+    "/v1/bank-accounts/{bankAccountId}": {
+      "put": {
+        "operationId": "BankAccountController_update",
+        "parameters": [
+          {
+            "name": "bankAccountId",
+            "required": true,
+            "in": "path",
+            "description": "ID da conta bancária a ser atualizada",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BankAccountRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "bank-accounts"
+        ]
+      },
+      "get": {
+        "operationId": "BankAccountController_findOne",
+        "parameters": [
+          {
+            "name": "bankAccountId",
+            "required": true,
+            "in": "path",
+            "description": "ID da conta bancária a ser buscada",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "bank-accounts"
+        ]
+      },
+      "delete": {
+        "operationId": "BankAccountController_delete",
+        "parameters": [
+          {
+            "name": "bankAccountId",
+            "required": true,
+            "in": "path",
+            "description": "ID da conta bancária a ser deletada",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "bank-accounts"
+        ]
+      }
+    },
+    "/v1/bank-account-transactions/{bankAccountTransactionId}/status": {
+      "put": {
+        "operationId": "BankAccountTransactionController_updateStatus",
+        "parameters": [
+          {
+            "name": "bankAccountTransactionId",
+            "required": true,
+            "in": "path",
+            "description": "ID da transação da conta bancária",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "bank-account-transactions"
+        ]
+      }
+    },
+    "/v1/bank-account-transactions": {
+      "post": {
+        "operationId": "BankAccountTransactionController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BankAccountTransactionRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "bank-account-transactions"
+        ]
+      },
+      "get": {
+        "operationId": "BankAccountTransactionController_find",
+        "parameters": [
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Texto de busca",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "description": "Ordenação",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "month",
+            "required": false,
+            "in": "query",
+            "description": "Mês (MM)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "year",
+            "required": false,
+            "in": "query",
+            "description": "Ano (YYYY)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "bank-account-transactions"
+        ]
+      }
+    },
+    "/v1/bank-account-transactions/{bankAccountTransactionId}": {
+      "put": {
+        "operationId": "BankAccountTransactionController_update",
+        "parameters": [
+          {
+            "name": "bankAccountTransactionId",
+            "required": true,
+            "in": "path",
+            "description": "ID da transação a ser atualizada",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BankAccountTransactionRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "bank-account-transactions"
+        ]
+      },
+      "get": {
+        "operationId": "BankAccountTransactionController_findOne",
+        "parameters": [
+          {
+            "name": "bankAccountTransactionId",
+            "required": true,
+            "in": "path",
+            "description": "ID da transação a ser buscada",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "bank-account-transactions"
+        ]
+      },
+      "delete": {
+        "operationId": "BankAccountTransactionController_delete",
+        "parameters": [
+          {
+            "name": "bankAccountTransactionId",
+            "required": true,
+            "in": "path",
+            "description": "ID da transação a ser deletada",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "option",
+            "required": false,
+            "in": "query",
+            "description": "Opção de exclusão (SOFT ou HARD)",
+            "schema": {
+              "enum": [
+                "CURRENT",
+                "CURRENT_AND_NEXT",
+                "CURRENT_AND_NEXT_AND_PREVIOUS"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "bank-account-transactions"
+        ]
+      }
+    },
+    "/v1/credit-cards/transactions": {
+      "get": {
+        "operationId": "CreditCardController_findWithTransactions",
+        "parameters": [
+          {
+            "name": "month",
+            "required": false,
+            "in": "query",
+            "description": "Mês das transações (MM)",
+            "schema": {
+              "example": "06",
+              "type": "string"
+            }
+          },
+          {
+            "name": "year",
+            "required": false,
+            "in": "query",
+            "description": "Ano das transações (YYYY)",
+            "schema": {
+              "example": "2025",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "credit-cards"
+        ]
+      }
+    },
+    "/v1/credit-cards": {
+      "post": {
+        "operationId": "CreditCardController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreditCardRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "credit-cards"
+        ]
+      },
+      "get": {
+        "operationId": "CreditCardController_find",
+        "parameters": [
+          {
+            "name": "name",
+            "required": false,
+            "in": "query",
+            "description": "Filtrar cartões pelo nome",
+            "schema": {
+              "example": "Visa Platinum",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "credit-cards"
+        ]
+      }
+    },
+    "/v1/credit-cards/{creditCardId}": {
+      "put": {
+        "operationId": "CreditCardController_update",
+        "parameters": [
+          {
+            "name": "creditCardId",
+            "required": true,
+            "in": "path",
+            "description": "ID do cartão de crédito a ser atualizado",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreditCardRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "credit-cards"
+        ]
+      },
+      "get": {
+        "operationId": "CreditCardController_findOne",
+        "parameters": [
+          {
+            "name": "creditCardId",
+            "required": true,
+            "in": "path",
+            "description": "ID do cartão de crédito a ser buscado",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "credit-cards"
+        ]
+      },
+      "delete": {
+        "operationId": "CreditCardController_delete",
+        "parameters": [
+          {
+            "name": "creditCardId",
+            "required": true,
+            "in": "path",
+            "description": "ID do cartão de crédito a ser deletado",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "credit-cards"
+        ]
+      }
+    },
+    "/v1/credit-card-transactions": {
+      "post": {
+        "operationId": "CreditCardTransactionController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreditCardTransactionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "credit-card-transactions"
+        ]
+      },
+      "get": {
+        "operationId": "CreditCardTransactionController_find",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "credit-card-transactions"
+        ]
+      }
+    },
+    "/v1/credit-card-transactions/{creditCardTransactionId}": {
+      "put": {
+        "operationId": "CreditCardTransactionController_update",
+        "parameters": [
+          {
+            "name": "creditCardTransactionId",
+            "required": true,
+            "in": "path",
+            "description": "ID da transação de cartão de crédito a ser atualizada",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreditCardTransactionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "credit-card-transactions"
+        ]
+      },
+      "get": {
+        "operationId": "CreditCardTransactionController_findOne",
+        "parameters": [
+          {
+            "name": "creditCardTransactionId",
+            "required": true,
+            "in": "path",
+            "description": "ID da transação de cartão de crédito",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "credit-card-transactions"
+        ]
+      },
+      "delete": {
+        "operationId": "CreditCardTransactionController_delete",
+        "parameters": [
+          {
+            "name": "creditCardTransactionId",
+            "required": true,
+            "in": "path",
+            "description": "ID da transação de cartão de crédito a ser deletada",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "credit-card-transactions"
+        ]
+      }
+    },
+    "/v1/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/v1/auth/register": {
+      "post": {
+        "operationId": "AuthController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/v1/categories/icons": {
+      "get": {
+        "operationId": "CategoryController_findIcons",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "categories"
+        ]
+      }
+    },
+    "/v1/categories": {
+      "post": {
+        "operationId": "CategoryController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "categories"
+        ]
+      },
+      "get": {
+        "operationId": "CategoryController_find",
+        "parameters": [
+          {
+            "name": "operation",
+            "required": false,
+            "in": "query",
+            "description": "Descrição da operação (INCOME ou EXPENSE)",
+            "schema": {
+              "enum": [
+                "INCOME",
+                "EXPENSE"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "categories"
+        ]
+      }
+    },
+    "/v1/categories/{categoryId}": {
+      "put": {
+        "operationId": "CategoryController_update",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "path",
+            "description": "ID da categoria a ser atualizada",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "categories"
+        ]
+      },
+      "get": {
+        "operationId": "CategoryController_findOne",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "path",
+            "description": "ID da categoria a ser buscada",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "categories"
+        ]
+      },
+      "delete": {
+        "operationId": "CategoryController_delete",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "path",
+            "description": "ID da categoria a ser deletada",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "categories"
+        ]
+      }
+    },
+    "/v1/payment-methods": {
+      "get": {
+        "operationId": "PaymentMethodController_find",
+        "parameters": [
+          {
+            "name": "name",
+            "required": false,
+            "in": "query",
+            "description": "Filtrar métodos de pagamento pelo nome",
+            "schema": {
+              "example": "Cartão de Crédito",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "payment-methods"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/payment-methods/{categoryId}": {
+      "get": {
+        "operationId": "PaymentMethodController_findOne",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "path",
+            "description": "ID do método de pagamento a ser buscado",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "payment-methods"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/reports": {
+      "get": {
+        "operationId": "ReportController_getFinancialReport",
+        "parameters": [
+          {
+            "name": "year",
+            "required": true,
+            "in": "query",
+            "description": "Ano do relatório financeiro",
+            "schema": {
+              "example": "2025",
+              "type": "string"
+            }
+          },
+          {
+            "name": "month",
+            "required": true,
+            "in": "query",
+            "description": "Mês do relatório financeiro (formato MM)",
+            "schema": {
+              "example": "06",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "reports"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/files/{userId}/{filename}": {
+      "get": {
+        "operationId": "FileController_getFile",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "description": "ID do usuário dono do arquivo",
+            "schema": {
+              "example": "123",
+              "type": "string"
+            }
+          },
+          {
+            "name": "filename",
+            "required": true,
+            "in": "path",
+            "description": "Nome do arquivo a ser recuperado",
+            "schema": {
+              "example": "foto.jpg",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "files"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/files/public/{directory}/{filename}": {
+      "get": {
+        "operationId": "FileController_getPublicFile",
+        "parameters": [
+          {
+            "name": "directory",
+            "required": true,
+            "in": "path",
+            "description": "Diretório público onde o arquivo está",
+            "schema": {
+              "example": "avatars",
+              "type": "string"
+            }
+          },
+          {
+            "name": "filename",
+            "required": true,
+            "in": "path",
+            "description": "Nome do arquivo público a ser recuperado",
+            "schema": {
+              "example": "avatar1.png",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "files"
+        ]
+      }
+    },
+    "/v1/issuers": {
+      "get": {
+        "operationId": "IssuerController_find",
+        "parameters": [
+          {
+            "name": "name",
+            "required": false,
+            "in": "query",
+            "description": "Filtra emissores pelo nome",
+            "schema": {
+              "example": "Banco do Brasil",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "issuers"
+        ]
+      }
+    },
+    "/v1/issuers/{id}": {
+      "get": {
+        "operationId": "IssuerController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID do emissor a ser buscado",
+            "schema": {
+              "example": 123,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "issuers"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Finance APP",
+    "description": "The finance API description",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [
+    {
+      "url": "http://localhost:3000/",
+      "description": "Local environment"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "UserRequestDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "João Silva"
+          },
+          "email": {
+            "type": "string",
+            "example": "joao@email.com"
+          },
+          "cpf": {
+            "type": "string",
+            "example": "12345678901",
+            "description": "CPF somente números, 11 dígitos"
+          },
+          "password": {
+            "type": "string",
+            "example": "senhaSegura123"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "cpf",
+          "password"
+        ]
+      },
+      "BankAccountRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Conta Corrente Banco XPTO"
+          },
+          "initialAmount": {
+            "type": "number",
+            "example": 1000
+          }
+        },
+        "required": [
+          "name",
+          "initialAmount"
+        ]
+      },
+      "Category": {
+        "type": "object",
+        "properties": {}
+      },
+      "BankAccount": {
+        "type": "object",
+        "properties": {}
+      },
+      "PaymentMethod": {
+        "type": "object",
+        "properties": {}
+      },
+      "BankAccountTransactionRequestDTO": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "example": "Compra no supermercado"
+          },
+          "notes": {
+            "type": "string",
+            "example": "Comprado com desconto de 10%"
+          },
+          "date": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2025-06-25T14:00:00Z"
+          },
+          "amount": {
+            "type": "number",
+            "example": 150.75
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PAID",
+              "PENDING"
+            ]
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "INCOME",
+              "EXPENSE"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "RECURRENT",
+              "SINGLE",
+              "IN_INSTALLMENTS"
+            ]
+          },
+          "category": {
+            "$ref": "#/components/schemas/Category"
+          },
+          "bankAccount": {
+            "$ref": "#/components/schemas/BankAccount"
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/PaymentMethod"
+          },
+          "installments": {
+            "type": "number",
+            "example": 3
+          }
+        },
+        "required": [
+          "description",
+          "notes",
+          "date",
+          "amount",
+          "status",
+          "operation",
+          "type",
+          "category",
+          "bankAccount",
+          "paymentMethod"
+        ]
+      },
+      "CreditCardRequest": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreditCard": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreditCardTransactionRequest": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "example": "Compra no supermercado"
+          },
+          "date": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2025-06-25T14:00:00Z"
+          },
+          "notes": {
+            "type": "string",
+            "example": "Comprado com desconto"
+          },
+          "amount": {
+            "type": "number",
+            "example": 150.75
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "RECURRENT",
+              "SINGLE",
+              "IN_INSTALLMENTS"
+            ]
+          },
+          "category": {
+            "$ref": "#/components/schemas/Category"
+          },
+          "creditCard": {
+            "$ref": "#/components/schemas/CreditCard"
+          }
+        },
+        "required": [
+          "description",
+          "date",
+          "notes",
+          "amount",
+          "type",
+          "category",
+          "creditCard"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {}
+      },
+      "AuthResponseDTO": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": [
+          "token",
+          "user"
+        ]
+      },
+      "RegisterRequestDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "João Silva"
+          },
+          "email": {
+            "type": "string",
+            "example": "joao@email.com"
+          },
+          "cpf": {
+            "type": "string",
+            "example": "12345678901"
+          },
+          "password": {
+            "type": "string",
+            "example": "senhaSegura123"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "cpf",
+          "password"
+        ]
+      },
+      "CategoryRequestDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Alimentação"
+          },
+          "color": {
+            "type": "string",
+            "example": "#FF5733",
+            "description": "Cor no formato hexadecimal (#RRGGBB)"
+          },
+          "icon": {
+            "type": "string",
+            "example": "shopping-cart",
+            "description": "Nome do ícone (ex: ícone do FontAwesome ou similar)"
+          }
+        },
+        "required": [
+          "name",
+          "color",
+          "icon"
+        ]
+      }
+    }
+  }
+}

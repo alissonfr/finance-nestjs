@@ -4,6 +4,7 @@ import { BankAccount } from "src/modules/bank-account/entities/bank-account.enti
 import { Category } from "src/modules/category/entities/category.entity"
 import { Operation } from "src/shared/enum/operation.enum"
 import { Repository } from "typeorm"
+import { UserRequestDTO } from "../dtos/user-request.dto"
 import { User } from "../entities/user.entity"
 
 @Injectable()
@@ -17,7 +18,7 @@ export class UserService {
         private readonly bankAccountRepository: Repository<BankAccount>,
     ) {}
 
-    async create(data: User): Promise<User> {
+    async create(data: UserRequestDTO): Promise<User> {
         const user = await this.repository.save(this.repository.create(data))
         this.categoryRepository.save(this.getInitialCategories(user))
         this.bankAccountRepository.save(this.getInitialBankAccount(user))

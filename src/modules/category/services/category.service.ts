@@ -4,15 +4,9 @@ import * as Icons from "src/data/icons.json"
 import { User } from "src/modules/user/entities/user.entity"
 import { Operation } from "src/shared/enum/operation.enum"
 import { Repository } from "typeorm"
+import { CategoryRequestDTO } from "../dtos/category-request.dto"
 import { Icon } from "../dtos/icon.dto"
 import { Category } from "../entities/category.entity"
-
-class CreateCategoryInput {
-    name: string
-    color: string
-    icon: string
-    user: User
-}
 
 @Injectable()
 export class CategoryService {
@@ -39,8 +33,8 @@ export class CategoryService {
         return category
     }
 
-    async create(input: CreateCategoryInput): Promise<Category> {
-        const category = this.repository.create({ ...input })
+    async create(input: CategoryRequestDTO, user: User): Promise<Category> {
+        const category = this.repository.create({ ...input, user })
         return await this.repository.save(category)
     }
 

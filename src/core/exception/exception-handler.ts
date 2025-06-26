@@ -35,7 +35,7 @@ export class ExceptionHandler implements ExceptionFilter {
       statusCode: HttpStatus.BAD_REQUEST,
       timestamp: new Date().toISOString(),
       path: request.url,
-      message: `${match[1].charAt(0).toUpperCase() + match[1].slice(1)} já está em uso.`
+      message: `${match[1].charAt(0) + match[1].slice(1)} já está em uso.`
     });
   }
 
